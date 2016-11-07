@@ -109,8 +109,8 @@ int main (int argc, char *argv[]) {
         }
 	printf("\n");
     }
-    abr_opt(0, (int) n - 1, (int) n, (int*) racines, (int***) &abr);
-    affiche_abr((int) n, abr);
+    abr_opt(0, (int) n - 1, (int) n, (int*) racines, abr);
+    affiche_abr((int) n, abr, racines);
     /* Fin Modification */
 
     fclose(freqFile);
