@@ -19,7 +19,7 @@ all: binary #report doc
 
 # $(BINDIR)/compileBST: $(CSOURCE)
 $(BINDIR)/compileBST: $(CSOURCE) $(CCOMPLEMENT)
-	$(CC) $(CFLAGS)  $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 %.pdf: $(LATEXSOURCE)
 	$(LATEXC) -output-directory $(REPORTDIR) $^ 
