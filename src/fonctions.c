@@ -61,11 +61,12 @@ double* parser_fichier(int n, FILE* f) {
     return p;
 }
 
-double f(int i, int j, int n, double probabilites[], int ***racines) {
+double f(int i, int j, int n, double probabilites[], int **racines) {
     if (j < i) {
         return 0;
     } else if (i == j) {
-//        (*racines)[i][j] = i;
+	//(*racines)[i][j] = i;     
+	*((*racines) + i*n + j) = i;
         return probabilites[i];
     } else {
         int min = -1;
@@ -81,23 +82,23 @@ double f(int i, int j, int n, double probabilites[], int ***racines) {
                 indice = k;
             }
         }
-        (*racines)[i][j] = indice;
+        *((*racines) + i*n + j) = indice;
         return min;
     }
 }
 
-void abr_opt(int i, int j, int n, int **racines, int ***abr) {
-    int r = racines[i][j];
+void abr_opt(int i, int j, int n, int *racines, int ***abr) {
+    int r = racines[i*n + j];
     //(*abr) [r] = -1;
     //(*abr) [r + 1] = -1;
 
     if (i < r-1) {
-        (*abr)[r][0] = racines[i][r-1]; // Fils gauche
+        (*abr)[r][0] = racines[i*n + r-1]; // Fils gauche
         abr_opt(i, r-1, n, racines, abr);
     }
 
     if (r+1 < j) {
-        (*abr)[r][1] = racines[r][j]; // Fils droite
+        (*abr)[r][1] = racines[r*n + j]; // Fils droite
         abr_opt(r+1, j, n, racines, abr);
     }
 }
