@@ -1,7 +1,7 @@
 CC=cc
 LATEXC=pdflatex
 DOCC=doxygen
-CFLAGS=-g -Wall 
+CFLAGS=-g -Wall -std=c99
 
 REFDIR=.
 SRCDIR=$(REFDIR)/src
@@ -19,7 +19,7 @@ all: binary #report doc
 
 # $(BINDIR)/compileBST: $(CSOURCE)
 $(BINDIR)/compileBST: $(CSOURCE) $(CCOMPLEMENT)
-	$(CC) $(CFLAGS)  $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 %.pdf: $(LATEXSOURCE)
 	$(LATEXC) -output-directory $(REPORTDIR) $^ 
