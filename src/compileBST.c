@@ -93,19 +93,23 @@ int main (int argc, char *argv[]) {
         abr[i][1] = -1;
     }
     //int racines[n][n];
-    int *racines = (int*) malloc(n * n * sizeof(int));
+    int *racines = (int *) malloc(n * n * sizeof(int));
+    memset((void*) racines, -1, n * n * sizeof(int));
+    /*
     for (int i = 0; i < n; i ++) {
         for (int j = 0; j < n; j++) {
             racines[i*n + j] = -1;
         }
-    } 
-    f(0, ((int) n) - 1, (int) n, probabilites, racines);
+    } */
+    f(0, ((int) n) - 1, (int) n, probabilites, &racines);
+    printf("\n Racines : \n");
     for (int i = 0; i < n; i ++) {
         for (int j = 0; j < n; j++) {
             printf(" %d ", racines[i*n + j]);
         }
+	printf("\n");
     }
-    abr_opt(0, (int) n - 1, (int) n, racines, (int***) &abr);
+    abr_opt(0, (int) n - 1, (int) n, (int*) racines, (int***) &abr);
     affiche_abr((int) n, abr);
     /* Fin Modification */
 

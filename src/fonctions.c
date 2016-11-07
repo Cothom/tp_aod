@@ -39,11 +39,12 @@ double* parser_fichier(int n, FILE* f) {
     return p;
 }
 
-double f(int i, int j, int n, double probabilites[], int *racines) {
+double f(int i, int j, int n, double probabilites[], int **racines) {
     if (j < i) {
         return 0;
     } else if (i == j) {
-        racines[i*n + j] = i;
+	//(*racines)[i][j] = i;     
+	*((*racines) + i*n + j) = i;
         return probabilites[i];
     } else {
         int min = -1;
@@ -59,7 +60,7 @@ double f(int i, int j, int n, double probabilites[], int *racines) {
                 indice = k;
             }
         }
-        racines[i*n + j] = indice;
+        *((*racines) + i*n + j) = indice;
         return min;
     }
 }
