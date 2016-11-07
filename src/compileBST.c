@@ -85,27 +85,27 @@ int main (int argc, char *argv[]) {
 
     /* Debut Modification */
     double* probabilites = parser_fichier((int) n, freqFile);
-    fflush(stdout);
+//    fflush(stdout);
 //    int *abr = malloc(2 * n * sizeof(int));
     int abr[n][2];
     for (int i = 0; i < n; i ++) {
         abr[i][0] = -1;
         abr[i][1] = -1;
     }
-    int racines[n][n];
-    //int *racines = malloc(n * n * sizeof(int));
+    //int racines[n][n];
+    int *racines = (int*) malloc(n * n * sizeof(int));
     for (int i = 0; i < n; i ++) {
         for (int j = 0; j < n; j++) {
-            racines[i][j] = -1;
+            racines[i*n + j] = -1;
         }
     } 
-    f(0, ((int) n) - 1, (int) n, probabilites, (int***) &racines);
+    f(0, ((int) n) - 1, (int) n, probabilites, racines);
     for (int i = 0; i < n; i ++) {
         for (int j = 0; j < n; j++) {
-            printf(" %d ", racines[i][j]);
+            printf(" %d ", racines[i*n + j]);
         }
     }
-    abr_opt(0, (int) n - 1, (int) n, (int**) racines, (int***) &abr);
+    abr_opt(0, (int) n - 1, (int) n, racines, (int***) &abr);
     affiche_abr((int) n, abr);
     /* Fin Modification */
 
