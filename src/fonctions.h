@@ -9,10 +9,10 @@ bool estChiffre(char c);
 
 double* parser_fichier(int n, FILE* f);
 
-double f(int i, int j, double probabilites[], int ***racines);
+double f(int i, int j, int n, double probabilites[], int **racines);
 
-void abr_opt(int i, int j, int **racines, int ***abr);
+void abr_opt(int i, int j, int n, int *racines, int **abr);
 
-void affiche_abr(int n, int (*)[2]abr);
+void affiche_abr(int n, int *abr);
 
 #endif
