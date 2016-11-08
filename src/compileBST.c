@@ -82,60 +82,30 @@ int main (int argc, char *argv[]) {
     if (freqFile==NULL) {fprintf (stderr, "!!!!! Error opening originalFile !!!!!\n"); exit(EXIT_FAILURE);}
 
     // TO BE COMPLETED
-
     /* Debut Modification */
+    /* Création, allocation et initialisation des tableaux */
     double* probabilites = parser_fichier((int) n, freqFile);
-    fflush(stdout);
-    printf(" p2 :  ");
-    for (int i=0; i<n; i++) {
-       printf(" %f ", probabilites[i]);
-    }
-    fflush(stdout);
-//    int *abr = malloc(2 * n * sizeof(int));
     int abr[n][2];
-    for (int i = 0; i < n; i ++) {
-        abr[i][0] = -1;
-        abr[i][1] = -1;
-    }
-    //int racines[n][n];
+    memset((void*) abr, -1, 2 * n  * sizeof(int));
+
     int *racines = (int *) malloc(n * n * sizeof(int));
     memset((void*) racines, -1, n * n * sizeof(int));
-    /*
-    for (int i = 0; i < n; i ++) {
-        for (int j = 0; j < n; j++) {
-            racines[i*n + j] = -1;
-        }
-    } */
+
     double *sommes_ij = (double *) malloc(n * n * sizeof(double));
-    memset((void*) sommes_ij, -1, n * n * sizeof(double));
-    double sum;
-    int taille = (int) n;
-    for (int i=0; i<taille; i++){
-	for (int j=i; j<taille; j++){
-	    sum = 0;
-	    for (int k=i; k<=j; k++){
-		sum += probabilites[k];
-	    }
-	    sommes_ij[i*n + j] = sum;
-	}
-    }
+    memset((void*) sommes_ij, 0, n * n * sizeof(double));
+
     double *res_opt = (double *) malloc(n * n * sizeof(double));
     memset((void*) res_opt, 0, n * n * sizeof(double));
-
     
-    printf("\n Debut f \n");
-    f(0, ((int) n) - 1, (int) n, probabilites, &sommes_ij, &res_opt, &racines);
-    printf("\n Fin f \n");
-    printf("\n Racines : \n");
-    /*
-    for (int i = 0; i < n; i ++) {
-        for (int j = 0; j < n; j++) {
-            printf(" %d ", racines[i*n + j]);
-        }
-	printf("\n");
-    }*/
-    abr_opt(0, (int) n - 1, (int) n, (int*) racines, abr);
-    affiche_abr((int) n, abr, racines);
+    f(0, ((int) n) - 1, (int) n, probabilites, &sommes_ij, &res_opt, &racines); // Stockage des racines optimales
+    abr_opt(0, (int) n - 1, (int) n, (int*) racines, abr); // Création de l'arbre
+    affiche_abr((int) n, abr, racines); // Affichage de l'arbre
+
+    // Libération de la mémoire
+    free(racines);
+    free(sommes_ij);
+    free(res_opt);
+    
     /* Fin Modification */
 
     fclose(freqFile);
