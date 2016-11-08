@@ -103,7 +103,7 @@ int main (int argc, char *argv[]) {
     /*
     for (int i = 0; i < n; i ++) {
         for (int j = 0; j < n; j++) {
-            racines[i][j] = -1;
+            racines[i*n + j] = -1;
         }
     } */
     f(0, ((int) n) - 1, (int) n, probabilites, &racines);

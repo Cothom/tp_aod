@@ -21,36 +21,13 @@ double* parser_fichier(int n, FILE* f) {
     /* Tableau des probabilites */
     double *p = malloc(n * sizeof(double));
     int c;
-//    int indice = 0;
-//    int nombre = 0;
     int somme = 0;
-//    bool lectureNombre = false;
-//    do {
     for (int i = 0; i < n; i++) {
         fscanf(f, "%d ", &c);
         p[i] = c;
         somme += c;
     }
-
-//        c = fgetc(f);
-//        while (estChiffre(c)) {
-//            if (!lectureNombre) {
-//                nombre = atoi(&c);
-//                lectureNombre = true;
-//            } else {
-//                nombre = nombre*10 + atoi(&c);
-//            }
-//            if (lectureNombre) {
-//                lectureNombre = false;
-//                //printf("Nombre : %d\n", nombre);
-//                p[indice] = (double) nombre;
-//                somme += nombre;
-//                indice++;
-//            }
-//        }
-//    } while (c != EOF); 
-    printf("Somme : %d\n Tableau: ", somme);
-
+    printf("Somme : %d\nTableau: ", somme);
     for (int i=0; i<n; i++) {
         printf(" %f ", p[i]);
         p[i] = p[i] / (double) somme;
@@ -58,6 +35,7 @@ double* parser_fichier(int n, FILE* f) {
     for (int i=0; i<n; i++) {
        printf(" %f ", p[i]);
     }
+    printf("\n");
     return p;
 }
 
