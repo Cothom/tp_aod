@@ -43,8 +43,6 @@ double f(int i, int j, int n, double probabilites[], double **sommes_ij, double 
     if (j < i) {
         return 0;
    } else if (i == j) {
-	//(*racines)[i][j] = i;     
-	//*((*racines) + i*n + j) = i;
 	(*racines) [i*n + j] = i;
 	(*res_opt) [i*n + j] = probabilites[i];
 	return probabilites[i];
@@ -74,8 +72,6 @@ double f(int i, int j, int n, double probabilites[], double **sommes_ij, double 
 	    //printf(" s : %f", s);
         }
 	(*res_opt) [i*n + j] = min;
-	//*((*res_opt) + i*n + j) = min;
-        //*((*racines) + i*n + j) = indice;
 	(*racines) [i*n + j] = indice;
         return min;
     }

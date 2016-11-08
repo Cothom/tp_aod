@@ -113,7 +113,7 @@ int main (int argc, char *argv[]) {
     for (int i=0; i<taille; i++){
 	for (int j=i; j<taille; j++){
 	    sum = 0;
-	    for (int k=i; k<j+1; k++){
+	    for (int k=i; k<=j; k++){
 		sum += probabilites[k];
 	    }
 	    sommes_ij[i*n + j] = sum;
