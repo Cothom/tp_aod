@@ -39,22 +39,33 @@ double* parser_fichier(int n, FILE* f) {
     return p;
 }
 
-double f(int i, int j, int n, double probabilites[], int **racines) {
+double f(int i, int j, int n, double probabilites[], double **sommes_ij, double **res_opt, int **racines) {
     if (j < i) {
         return 0;
-    } else if (i == j) {
+   } else if (i == j) {
 	//(*racines)[i][j] = i;     
-	*((*racines) + i*n + j) = i;
-        return probabilites[i];
+	//*((*racines) + i*n + j) = i;
+	(*racines) [i*n + j] = i;
+	(*res_opt) [i*n + j] = probabilites[i];
+	return probabilites[i];
+
+    } else if ((*res_opt)[i*n + j] != 0) {
+	return (*res_opt)[i*n + j];
     } else {
         double min = -1;
         double s = 0;
         int indice;
-        for (int a = i; a <= j; a++) {
-            s += probabilites[a];
-        }
+	if ((*sommes_ij)[i*n + j] != -1) {
+	    s = (*sommes_ij)[i*n + j];
+	} else {
+	    for (int a = i; a <= j; a++) {
+		s += probabilites[a];
+	    }
+	    (*sommes_ij)[i*n + j] = s;
+	}
+	double res;
         for (int k = i; k <= j; k++) {
-            double res = f(i, k-1, n, probabilites, racines) + f(k+1, j, n, probabilites, racines) + s;
+            res = f(i, k-1, n, probabilites, sommes_ij, res_opt, racines) + f(k+1, j, n, probabilites, sommes_ij, res_opt, racines) + s;
             if (min == -1 || res < min) {
 		min = res;
                 indice = k;
@@ -62,8 +73,10 @@ double f(int i, int j, int n, double probabilites[], int **racines) {
 	    //printf(" res : %f", res);
 	    //printf(" s : %f", s);
         }
-        *((*racines) + i*n + j) = indice;
-    
+	(*res_opt) [i*n + j] = min;
+	//*((*res_opt) + i*n + j) = min;
+        //*((*racines) + i*n + j) = indice;
+	(*racines) [i*n + j] = indice;
         return min;
     }
 }
@@ -74,13 +87,13 @@ void abr_opt(int i, int j, int n, int *racines, int (*abr)[2]) {
     //(*abr) [r] = -1;
     //(*abr) [r + 1] = -1;
     //printf("\n %d %d %d %d\n", r, n, i, j);
-    if (i < r-1) {
+    if (i <= r-1) {
         //(*abr)[r][0] = racines[i*n + r-1]; // Fils gauche
         (abr)[r][0] = racines[i*n + r-1];
 	abr_opt(i, r-1, n, racines, abr);
     }
 
-    if (r+1 < j) {
+    if (r+1 <= j) {
         //(*abr)[r][1] = racines[r*n + j]; // Fils droite
 	//	printf("\n %d %d %d\n", r, n, j);
         (abr)[r][1] = racines[(r+1)*n + j];

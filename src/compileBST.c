@@ -106,14 +106,34 @@ int main (int argc, char *argv[]) {
             racines[i*n + j] = -1;
         }
     } */
-    f(0, ((int) n) - 1, (int) n, probabilites, &racines);
+    double *sommes_ij = (double *) malloc(n * n * sizeof(double));
+    memset((void*) sommes_ij, -1, n * n * sizeof(double));
+    double sum;
+    int taille = (int) n;
+    for (int i=0; i<taille; i++){
+	for (int j=i; j<taille; j++){
+	    sum = 0;
+	    for (int k=i; k<j+1; k++){
+		sum += probabilites[k];
+	    }
+	    sommes_ij[i*n + j] = sum;
+	}
+    }
+    double *res_opt = (double *) malloc(n * n * sizeof(double));
+    memset((void*) res_opt, 0, n * n * sizeof(double));
+
+    
+    printf("\n Debut f \n");
+    f(0, ((int) n) - 1, (int) n, probabilites, &sommes_ij, &res_opt, &racines);
+    printf("\n Fin f \n");
     printf("\n Racines : \n");
+    /*
     for (int i = 0; i < n; i ++) {
         for (int j = 0; j < n; j++) {
             printf(" %d ", racines[i*n + j]);
         }
 	printf("\n");
-    }
+    }*/
     abr_opt(0, (int) n - 1, (int) n, (int*) racines, abr);
     affiche_abr((int) n, abr, racines);
     /* Fin Modification */

@@ -10,7 +10,7 @@ bool estChiffre(char c);
 
 double* parser_fichier(int n, FILE* f);
 
-double f(int i, int j, int n, double probabilites[], int **racines);
+double f(int i, int j, int n, double probabilites[], double **sommes_ij, double **res_opt, int **racines);
 
 void abr_opt(int i, int j, int n, int *racines, int (*abr)[2]);
 
