@@ -86,6 +86,11 @@ int main (int argc, char *argv[]) {
     /* Debut Modification */
     double* probabilites = parser_fichier((int) n, freqFile);
     fflush(stdout);
+    printf(" p2 :  ");
+    for (int i=0; i<n; i++) {
+       printf(" %f ", probabilites[i]);
+    }
+    fflush(stdout);
 //    int *abr = malloc(2 * n * sizeof(int));
     int abr[n][2];
     for (int i = 0; i < n; i ++) {

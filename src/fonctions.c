@@ -56,7 +56,7 @@ double* parser_fichier(int n, FILE* f) {
         p[i] = p[i] / (double) somme;
     }
     for (int i=0; i<n; i++) {
-        printf(" %f ", p[i]);
+       printf(" %f ", p[i]);
     }
     return p;
 }
@@ -69,18 +69,20 @@ double f(int i, int j, int n, double probabilites[], int **racines) {
 	*((*racines) + i*n + j) = i;
         return probabilites[i];
     } else {
-        int min = -1;
-        int s = 0;
+        double min = -1;
+        double s = 0;
         int indice;
         for (int a = i; a <= j; a++) {
             s += probabilites[a];
         }
         for (int k = i; k <= j; k++) {
-            int res = f(i, k-1, n, probabilites, racines) + f(k+1, j, n, probabilites, racines) + s;
-            if (min == -1 || res <= min) {
+            double res = f(i, k-1, n, probabilites, racines) + f(k+1, j, n, probabilites, racines) + s;
+            if (min == -1 || res < min) {
 		min = res;
                 indice = k;
             }
+	    //printf(" res : %f", res);
+	    //printf(" s : %f", s);
         }
         *((*racines) + i*n + j) = indice;
     
